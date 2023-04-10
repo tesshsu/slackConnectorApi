@@ -2,9 +2,9 @@
   "name": "my-saas-app",
   "version": "1.0.0",
   "description": "A SaaS application with a Slack integration",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/server.js",
     "test": "jest",
     "format": "prettier --write 'src/**/*.{js,ts,jsx,tsx,json,html,css,md}'"
   },
@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@slack/bolt": "^3.13.0",
+    "@slack/events-api": "^3.0.1",
     "@slack/web-api": "^6.5.0",
     "dotenv": "^16.0.3",
     "express": "^4.17.2",
