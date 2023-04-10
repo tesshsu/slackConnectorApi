@@ -1,5 +1,5 @@
 # Bank sync validation
-Backend api for bank sync validation
+Backend api for slack connector app
 
 ## Running the code
 
@@ -9,7 +9,7 @@ npm install
 npm start
 
 # Build the Docker image in the server folder
-docker build -t bank-validation-app .
+docker build -t slack-connector-app .
 
 # Testing with unit tests
 npm test
