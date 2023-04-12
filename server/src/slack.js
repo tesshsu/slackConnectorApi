@@ -1,4 +1,3 @@
-const { App } = require('@slack/bolt');
 const config = require('./config');
 const { createEventAdapter } = require('@slack/events-api');
 const slackEvents = createEventAdapter(config.slack.secret);
@@ -18,6 +17,5 @@ function slackEventHandler() {
 }
 
 module.exports = {
-    expressMiddleware: slackEvents.expressMiddleware.bind(slackEvents),
-    slackEventHandler
+    expressMiddleware: slackEvents.expressMiddleware.bind(slackEvents)
 };
