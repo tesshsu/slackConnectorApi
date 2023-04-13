@@ -5,6 +5,7 @@ module.exports = {
     slack: {
         token: process.env.SLACK_BOT_TOKEN,
         secret: process.env.SLACK_SIGNING_SECRET,
-        channel: process.env.SLACK_CHANNEL_ID
+        channel: process.env.SLACK_CHANNEL_ID,
+        socketMode:true,
     }
 }
