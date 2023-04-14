@@ -5,6 +5,17 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+RUN apk update && \
+    apk add --no-cache postgresql postgresql-client
+
+# Create database
+RUN su postgres -c "initdb -D /var/lib/postgresql/data"
+
+# Start PostgreSQL
+CMD ["su", "postgres", "-c", "/usr/bin/postgres -D /var/lib/postgresql/data"]
+
+COPY . .
+
 # Expose the server port and run the app
 EXPOSE 3000
 CMD [ "npm", "start" ]
