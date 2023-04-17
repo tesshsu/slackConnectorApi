@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    # container_name: slack-connector-app
+    # image: slack-connector-app
+    build: ./server
+    networks:
+      - webnet
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - SERVER_PORT=${PORT}
+      - NODE_ENV=development
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+    depends_on:
+      - database
+
+  database:
+    container_name: postgres
+    image: postgres
+    ports:
+      - '5433:${DB_PORT}'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  frontend:
+    # container_name: frontend
+    # image: frontendimage
+    build: ./client
+    ports:
+      - ${FRONT_PORT}:${FRONT_PORT}
+    environment:
+      - NEXT_APP_BACKEND_PORT=${PORT}
+      - PORT=${FRONT_PORT}
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

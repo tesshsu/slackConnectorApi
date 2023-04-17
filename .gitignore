@@ -8,6 +8,7 @@
 
 # Dependency directories
 server/node_modules/
+client/node_modules/
 jspm_packages/
 
 # Optional npm cache directory
@@ -29,3 +30,9 @@ yarn-error.log
 
 # Dist files
 dist
+
+# pgdata
+server/pgdata
+
+# Next.js build output
+client/.next
