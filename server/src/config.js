@@ -9,10 +9,10 @@ module.exports = {
         channel: process.env.SLACK_CHANNEL_ID,
     },
     dbb: {
-        host: process.env.DBB_HOST,
-        port: process.env.DBB_PORT,
-        user: process.env.DBB_USER,
-        password: process.env.DBB_PASSWORD,
-        database: process.env.DBB_DATABASE,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
     }
 }

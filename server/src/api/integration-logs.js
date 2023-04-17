@@ -8,7 +8,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
     user: config.dbb.user,
     host: config.dbb.host,
-    database: config.dbb.user,
+    database: config.dbb.database,
     password: config.dbb.password,
     port: config.dbb.port,
 });
