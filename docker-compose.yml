@@ -5,8 +5,6 @@ services:
     # container_name: slack-connector-app
     # image: slack-connector-app
     build: ./server
-    networks:
-      - webnet
     restart: always
     ports:
       - ${PORT}:${PORT}
@@ -23,15 +21,15 @@ services:
   database:
     container_name: postgres
     image: postgres
-    ports:
-      - '5433:${DB_PORT}'
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    restart: always
+    ports:
+      - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
-
   frontend:
     # container_name: frontend
     # image: frontendimage

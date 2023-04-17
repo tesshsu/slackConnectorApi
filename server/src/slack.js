@@ -32,6 +32,11 @@ module.exports = () => {
     });
 
     const now = new Date();
+    const today = now.toLocaleDateString(undefined, {timeZone: 'Europe/Paris'});
+    const targetTime = new Date(`${today} 9:00:00`).getTime() / 1000;
+    // If the target time has already passed for today, schedule for tomorrow instead
+    const postAt = targetTime < now.getTime() / 1000 ? targetTime + 86400 : targetTime;
+
     const message = {
         channel: config.slack.channel,
         text: 'Hello, do you have any plans for today?',
@@ -40,7 +45,7 @@ module.exports = () => {
     slackApp.client.chat.scheduleMessage({
         channel: message.channel,
         text: message.text,
-        post_at: Math.floor(now.getTime() / 1000) + 600,
+        post_at: postAt,
     }).then((result) => {
         console.log('Message scheduled successfully:', result);
     }).catch((error) => {
