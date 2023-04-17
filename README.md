@@ -1,4 +1,4 @@
-# Bank sync validation
+# Slack connector app
 Backend api for slack connector app
 
 ## Running the code
@@ -15,8 +15,7 @@ docker build -t slack-connector-app .
 # Run the Docker image
 docker run -p 3000:3000 slack-connector-app
 
-# Testing with unit tests
-npm test
+![uml](https://user-images.githubusercontent.com/3927152/232487162-04f923a4-cd6b-4b46-82cf-4af484961a05.png)
 
 ## License
 This library is released under the MIT License.
