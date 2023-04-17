@@ -13,7 +13,7 @@ cd server
 docker build -t slack-connector-app .
 
 # Run the Docker image
-docker run -p 8000:3000 slack-connector-app
+docker run -p 3000:3000 slack-connector-app
 
 # Testing with unit tests
 npm test
