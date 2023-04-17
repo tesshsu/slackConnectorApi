@@ -1,16 +1,18 @@
-import React from "react";
+import { useState, useEffect } from 'react';
 
-const IntegrationLogs = () => {
-    const logs = [
-        { userId: 1, messageText: "Hello World!" },
-        { userId: 2, messageText: "How are you?" },
-        { userId: 3, messageText: "Nice to meet you" },
-    ];
+function IntegrationLogs() {
+    const [logs, setLogs] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/integration-logs')
+            .then(response => response.json())
+            .then(data => setLogs(data));
+    }, []);
 
     return (
         <div>
             <h1>Integration Logs</h1>
-            <table>
+            <table className="table">
                 <thead>
                 <tr>
                     <th>User ID</th>
@@ -18,8 +20,8 @@ const IntegrationLogs = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {logs.map((log, index) => (
-                    <tr key={index}>
+                {logs.map(log => (
+                    <tr key={log.id}>
                         <td>{log.userId}</td>
                         <td>{log.messageText}</td>
                     </tr>
@@ -28,7 +30,6 @@ const IntegrationLogs = () => {
             </table>
         </div>
     );
-};
+}
 
 export default IntegrationLogs;
-
