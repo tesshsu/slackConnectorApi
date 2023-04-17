@@ -2,7 +2,7 @@
 FROM node:14-alpine AS server
 
 WORKDIR /app
-COPY ["package.json", "package-lock.json", "tsconfig.json", ".env", "./"]
+COPY ["package.json", "package-lock.json", ".env", "./"]
 RUN npm install
 
 RUN apk update && \
