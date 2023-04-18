@@ -1,26 +1,17 @@
-// server/src/api/integration-logs.js
-
 const express = require('express');
 const router = express.Router();
-const config = require('../config');
-const { Pool } = require('pg');
-
-const pool = new Pool({
-    user: config.dbb.user,
-    host: config.dbb.host,
-    database: config.dbb.database,
-    password: config.dbb.password,
-    port: config.dbb.port,
-});
+const pool = require('../database');
 
 // GET list of integration logs
-router.get('/integration-logs', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const { rows } = await pool.query('SELECT * FROM integration_logs');
-        res.status(200).json(rows);
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM integration_logs');
+        client.release();
+        res.json(result.rows);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error fetching integration logs:', error);
+        res.status(500).send('Error fetching integration logs');
     }
 });
 

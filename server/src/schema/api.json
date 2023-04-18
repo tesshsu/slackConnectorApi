@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "22365ff7-75f8-432e-bb2c-90805443692c",
+        "name": "Slack connector"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "bodyType": "Text",
+              "textBodyEditorHeight": 494,
+              "textBody": "{\n    \"movements\": [\n        {\n            \"id\": \"1\",\n            \"label\": \"Payment 1\",\n            \"amount\": -500,\n            \"date\": \"2022-01-01\"\n        },\n        {\n            \"id\": \"2\",\n            \"label\": \"Payment 2\",\n            \"amount\": -300,\n            \"date\": \"2022-01-02\"\n        },\n        {\n            \"id\": \"3\",\n            \"label\": \"Deposit\",\n            \"amount\": 800,\n            \"date\": \"2022-01-03\"\n        }\n    ],\n    \"balances\": [\n        {\n            \"date\": \"2022-01-01\",\n            \"balance\": 1000\n        },\n        {\n            \"date\": \"2022-01-02\",\n            \"balance\": 700\n        },\n        {\n            \"date\": \"2022-01-03\",\n            \"balance\": 1500\n        }\n    ]\n}\n"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "localhost:3000",
+              "path": "/integration-logs"
+            },
+            "id": "f229de88-966e-48d5-b517-6f2d6472156b",
+            "name": "List integration log",
+            "headers": [],
+            "assertions": []
+          }
+        }
+      ]
+    }
+  ]
+}

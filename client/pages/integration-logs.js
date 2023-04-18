@@ -1,29 +1,36 @@
 import { useState, useEffect } from 'react';
+import styles from '../public/styles/Integration-logs.module.css';
 
 function IntegrationLogs() {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        fetch('/api/integration-logs')
+        fetch(`http://localhost:3000/integration-logs`)
             .then(response => response.json())
-            .then(data => setLogs(data));
+            .then(logs => {
+                setLogs(logs);
+                console.log(logs);
+            })
+            .catch(error => console.error('Error fetching integration logs:', error));
     }, []);
 
     return (
-        <div>
+        <div className="container mt-3">
             <h1>Integration Logs</h1>
-            <table className="table">
+            <table className={styles.table}>
                 <thead>
                 <tr>
-                    <th>User ID</th>
-                    <th>Message Text</th>
+                    <th style={{ width: "20%" }}>User ID</th>
+                    <th style={{ width: "60%" }}>Message Text</th>
+                    <th style={{ width: "20%" }}>Created At</th>
                 </tr>
                 </thead>
                 <tbody>
                 {logs.map(log => (
                     <tr key={log.id}>
-                        <td>{log.userId}</td>
-                        <td>{log.messageText}</td>
+                        <td>{log.user_id}</td>
+                        <td>{log.message}</td>
+                        <td>{new Date(log.created_at).toLocaleString()}</td>
                     </tr>
                 ))}
                 </tbody>
