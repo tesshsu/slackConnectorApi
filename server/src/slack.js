@@ -1,20 +1,12 @@
 const { App } = require("@slack/bolt");
 const config = require('./config');
-const { Pool } = require("pg");
+const pool = require('./database');
 
 const slackApp = new App({
     token: config.slack.bot_token,
     signingSecret: config.slack.secret,
     appToken: config.slack.app_token,
     socketMode: true,
-});
-
-const pool = new Pool({
-    user: config.dbb.user,
-    host: config.dbb.host,
-    database: config.dbb.database,
-    password: config.dbb.password,
-    port: config.dbb.port,
 });
 
 module.exports = () => {
