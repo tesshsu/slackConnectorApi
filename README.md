@@ -19,5 +19,10 @@ docker run -p 3000:3000 slack-connector-app
 
 ![test](https://user-images.githubusercontent.com/3927152/232569337-1c83ec1e-0886-4304-8405-b0d437943c64.png)
 
+# Run client side
+cd client
+npm install
+npm run dev
+
 ## License
 This library is released under the MIT License.
