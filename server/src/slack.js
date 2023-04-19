@@ -2,11 +2,36 @@ const { App } = require("@slack/bolt");
 const config = require('./config');
 const pool = require('./database');
 
+
 const slackApp = new App({
     token: config.slack.bot_token,
     signingSecret: config.slack.secret,
     appToken: config.slack.app_token,
     socketMode: true,
+});
+
+// Use OAuth 2.0 to authorize users as middleware
+slackApp.use(async ({ next, context }) => {
+    try {
+        if (context.botUserId) {
+            console.log('Bot user ID is already available')
+            await next();
+        } else {
+            // TODO: Add a check to verify if the token is expired or not
+            // TODO: Add argument redirect_uri with https protocol to allow Slack to redirect to your app
+            const result = await slackApp.client.oauth.v2.access({
+                client_id: config.slack.client_id,
+                client_secret: config.slack.client_secret,
+                code: context.code,
+                refresh_token: context.refresh_token // add refresh token here
+            });
+            context.botUserId = result.authed_user.id;
+            context.refresh_token = result.refresh_token; // save the refresh token
+            await next();
+        }
+    } catch (err) {
+        console.error(`Error once authorize by middleware OAuth2: ${err}`);
+    }
 });
 
 module.exports = () => {

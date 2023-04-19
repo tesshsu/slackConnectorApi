@@ -7,6 +7,8 @@ module.exports = {
         secret: process.env.SLACK_SIGNING_SECRET,
         app_token: process.env.SLACK_APP_TOKEN,
         channel: process.env.SLACK_CHANNEL_ID,
+        client_id: process.env.SLACK_CLIENT_ID,
+        client_secret: process.env.SLACK_CLIENT_SECRET,
     },
     dbb: {
         host: process.env.DB_HOST,
