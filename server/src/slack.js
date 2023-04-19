@@ -1,7 +1,7 @@
 const { App } = require("@slack/bolt");
 const config = require('./config');
 const pool = require('./database');
-
+const jwt = require('jsonwebtoken');
 
 const slackApp = new App({
     token: config.slack.bot_token,
@@ -10,6 +10,27 @@ const slackApp = new App({
     socketMode: true,
 });
 
+// Check if the access token has expired and refresh it if necessary
+async function getAccessToken(context) {
+    let token = context.access_token;
+    const decoded = jwt.decode(token);
+    const now = Math.floor(Date.now() / 1000);
+    // TODO: Add argument redirect_uri with https protocol to allow Slack to redirect to your app
+    if (decoded.exp < now) {
+        console.log('Access token has expired, refreshing...');
+        const result = await slackApp.client.oauth.v2.access({
+            client_id: config.slack.client_id,
+            client_secret: config.slack.client_secret,
+            refresh_token: context.refresh_token,
+            code: context.code,
+            redirect_uri: config.slack.redirect_uri,
+        });
+        token = result.access_token;
+        context.access_token = token;
+    }
+    return token;
+}
+
 // Use OAuth 2.0 to authorize users as middleware
 slackApp.use(async ({ next, context }) => {
     try {
@@ -17,13 +38,9 @@ slackApp.use(async ({ next, context }) => {
             console.log('Bot user ID is already available')
             await next();
         } else {
-            // TODO: Add a check to verify if the token is expired or not
-            // TODO: Add argument redirect_uri with https protocol to allow Slack to redirect to your app
-            const result = await slackApp.client.oauth.v2.access({
-                client_id: config.slack.client_id,
-                client_secret: config.slack.client_secret,
-                code: context.code,
-                refresh_token: context.refresh_token // add refresh token here
+            const token = await getAccessToken(context);
+            const result = await slackApp.client.conversations.list({
+                token,
             });
             context.botUserId = result.authed_user.id;
             context.refresh_token = result.refresh_token; // save the refresh token
