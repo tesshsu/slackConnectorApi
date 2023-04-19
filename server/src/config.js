@@ -9,6 +9,7 @@ module.exports = {
         channel: process.env.SLACK_CHANNEL_ID,
         client_id: process.env.SLACK_CLIENT_ID,
         client_secret: process.env.SLACK_CLIENT_SECRET,
+        redirect_uri: process.env.SLACK_REDIRECT_URI,
     },
     dbb: {
         host: process.env.DB_HOST,
